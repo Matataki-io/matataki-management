@@ -58,7 +58,7 @@ class RobotService extends Service {
 
       if (count > 0) {
         const text = `申请Fan票提醒：目前有${resultQueue.length}条未处理`;
-        // this.pushToDingTalk({ text });
+        this.pushToDingTalk({ text });
         this.logger.info(text);
       }
     } catch (e) {
