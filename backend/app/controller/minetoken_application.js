@@ -56,18 +56,6 @@ class MineTokenApplicationController extends Controller {
       }
     }
   }
-  async test() {
-    const { ctx } = this;
-    const result = await ctx.service.minetokenApplication.agreeCreate();
-    if (result.code === 0) {
-      ctx.body = ctx.msg.success;
-    } else {
-      ctx.body = ctx.msg.failure;
-      if (result.message) {
-        ctx.body.message = result.message;
-      }
-    }
-  }
   async surveyList() {
     const { ctx } = this;
     const { pageSize = 10, pageIndex = 1 } = ctx.query;

@@ -50,5 +50,5 @@ module.exports = app => {
   router.get('/api/minetoken_application_survey/:id', passport, controller.minetokenApplication.surveyListId);
 
 
-  router.post('/api/test', passport, controller.minetokenApplication.test);
+  router.post('/api/test', passport, controller.test.test);
 };
