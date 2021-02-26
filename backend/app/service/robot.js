@@ -52,7 +52,7 @@ class RobotService extends Service {
           // 12h
           await app.redis.set(queue[i], Date.now(), 'EX', 43200);
         } else {
-          return;
+          //
         }
       }
 
