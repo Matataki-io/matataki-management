@@ -10,6 +10,7 @@ export default {
   announcement: `/api/announcement`,
   announcementTargeted: `/api/announcement/targeted`,
   minetokenApplication: `/api/minetoken_application`,
+  minetokenApplicationAgree: '/api/minetoken_application_agree',
   minetokenApplicationSurvey: `/api/minetoken_application_survey`,
   searchUsers: `/api/search/user`
 }
