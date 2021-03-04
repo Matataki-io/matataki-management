@@ -49,6 +49,13 @@ module.exports = app => {
   router.get('/api/minetoken_application_survey', passport, controller.minetokenApplication.surveyList);
   router.get('/api/minetoken_application_survey/:id', passport, controller.minetokenApplication.surveyListId);
 
+  // 获取所有账号信息
+  router.get('/api/userAccounts', passport, controller.user.userAccounts);
+  // 更新邮箱密码
+  router.put('/api/userAccountsUpdatePass', passport, controller.user.userAccountsUpdatePass);
+  // 添加邮箱绑定账号
+  router.post('/api/userAccountsBindEmail', passport, controller.user.userAccountsBindEmail);
+
 
   router.post('/api/test', passport, controller.test.test);
 };

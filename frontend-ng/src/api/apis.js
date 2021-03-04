@@ -12,5 +12,8 @@ export default {
   minetokenApplication: `/api/minetoken_application`,
   minetokenApplicationAgree: '/api/minetoken_application_agree',
   minetokenApplicationSurvey: `/api/minetoken_application_survey`,
-  searchUsers: `/api/search/user`
+  searchUsers: `/api/search/user`,
+  userAccounts: `/api/userAccounts`,
+  userAccountsUpdatePass: `/api/userAccountsUpdatePass`,
+  userAccountsBindEmail: `/api/userAccountsBindEmail`
 }

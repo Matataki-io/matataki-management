@@ -1,7 +1,6 @@
 'use strict';
 
 const Controller = require('egg').Controller;
-const consts = require('../service/consts');
 
 class UserController extends Controller {
   // 列表，GET
@@ -34,8 +33,8 @@ class UserController extends Controller {
     const { id } = ctx.params;
     const log = {
       for: 'update',
-      id: parseInt(id)
-    }
+      id: parseInt(id),
+    };
     const { isSeed = null, isMint = null, isExchange = null, isRecommend = null } = ctx.request.body;
     let isSeedResult = null;
     let isMintResult = null;
@@ -57,11 +56,10 @@ class UserController extends Controller {
     if (isRecommend !== null) {
       isRecommendResult = await ctx.service.user.update(id, { is_recommend: isRecommend ? 1 : 0 });
       log.isRecommendUpdate = true;
-      if (isRecommendResult[0] && isRecommend)
-        ctx.service.announcement.targetedPost(ctx.user.username, [parseInt(id)], '你已被瞬Matataki评为推荐作者', '');
+      if (isRecommendResult[0] && isRecommend) { ctx.service.announcement.targetedPost(ctx.user.username, [ parseInt(id) ], '你已被瞬Matataki评为推荐作者', ''); }
     }
 
-    await this.service.logging.addLog('user', ctx.user.id, log)
+    await this.service.logging.addLog('user', ctx.user.id, log);
     ctx.body = {
       ...ctx.msg.success,
       data: {
@@ -73,7 +71,9 @@ class UserController extends Controller {
     };
   }
   // 删除 DELETE
-  async destroy() { }
+  async destroy() {
+    //
+  }
 
   async search() {
     const { ctx } = this;
@@ -81,9 +81,69 @@ class UserController extends Controller {
     const result = await ctx.service.user.search(parseInt(pageSize), parseInt(pageIndex), word);
     ctx.body = {
       ...ctx.msg.success,
-      data: result
+      data: result,
+    };
+  }
+
+  async userAccounts() {
+    const { ctx } = this;
+    const { uid } = ctx.query;
+    const result = await ctx.service.user.userAccounts({ uid });
+    if (result.code === 0) {
+      ctx.body = {
+        ...ctx.msg.success,
+        data: result.data,
+      };
+    } else {
+      const res = {
+        ...ctx.msg.failure,
+        data: result.data,
+      };
+      if (result.message) {
+        res.message = result.message;
+      }
+      ctx.body = res;
     }
-    
+  }
+  async userAccountsUpdatePass() {
+    const { ctx } = this;
+    const { uid, password, key } = ctx.request.body;
+    const result = await ctx.service.user.userAccountsUpdatePass({ uid, password, key });
+    if (result.code === 0) {
+      ctx.body = {
+        ...ctx.msg.success,
+        data: result.data,
+      };
+    } else {
+      const res = {
+        ...ctx.msg.failure,
+        data: result.data,
+      };
+      if (result.message) {
+        res.message = result.message;
+      }
+      ctx.body = res;
+    }
+  }
+  async userAccountsBindEmail() {
+    const { ctx } = this;
+    const { uid, email, password, key } = ctx.request.body;
+    const result = await ctx.service.user.userAccountsBindEmail({ uid, email, password, key });
+    if (result.code === 0) {
+      ctx.body = {
+        ...ctx.msg.success,
+        data: result.data,
+      };
+    } else {
+      const res = {
+        ...ctx.msg.failure,
+        data: result.data,
+      };
+      if (result.message) {
+        res.message = result.message;
+      }
+      ctx.body = res;
+    }
   }
 }
 module.exports = UserController;
