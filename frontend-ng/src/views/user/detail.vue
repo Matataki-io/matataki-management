@@ -75,8 +75,9 @@
     </el-card>
     <el-card style="margin-top: 20px;">
       <div slot="header">
-        <span>ces1</span>
+        <span>账号管理</span>
       </div>
+      <accountsManagement />
     </el-card>
     <el-card style="margin-top: 20px;">
       <div slot="header">
@@ -90,11 +91,13 @@
 // import RpLog from '@/views/redpacket/components/rpLog'
 // import TokenList from './components/tokenList'
 import { userStatus } from '@/utils/consts'
+import accountsManagement from './components/accountsManagement'
 export default {
   name: 'Detail',
   components: {
     // RpLog,
     // TokenList
+    accountsManagement
   },
   data() {
     return {
