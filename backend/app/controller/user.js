@@ -19,7 +19,12 @@ class UserController extends Controller {
   async show() {
     const { ctx } = this;
     const { id } = ctx.params;
-    const result = await ctx.model.Users.find({ where: { id } });
+    const result = await ctx.model.Users.find({
+      where: { id },
+      attributes: {
+        exclude: [ 'password_hash' ],
+      },
+    });
     ctx.body = {
       ...ctx.msg.success,
       data: result,

@@ -15,7 +15,12 @@ class UserService extends Service {
 
     if (ctx.helper.isNull(searchParams)) {
       result.count = await ctx.model.Users.count();
-      result.rows = await ctx.model.Users.findAll({ order: [[ 'id', 'DESC' ]], offset, limit });
+      result.rows = await ctx.model.Users.findAll({
+        order: [[ 'id', 'DESC' ]], offset, limit,
+        attributes: {
+          exclude: [ 'password_hash' ],
+        },
+      });
     } else {
       for (const propName in searchParams) {
         if (searchParams[propName] === null || searchParams[propName] === '') {
@@ -36,6 +41,9 @@ class UserService extends Service {
         order: [[ 'id', 'DESC' ]],
         offset,
         limit,
+        attributes: {
+          exclude: [ 'password_hash' ],
+        },
       });
     }
     return result;
@@ -122,8 +130,39 @@ class UserService extends Service {
     };
   }
 
+  // 是否为交易账号
+  async isExchangeAccount({ uid }) {
+    if (!uid) {
+      return false;
+    }
+    const { ctx } = this;
+
+    try {
+      const sql = 'SELECT uid, account, platform FROM user_accounts WHERE uid = :uid;';
+      const [ result ] = await ctx.model.query(sql, {
+        raw: true,
+        replacements: {
+          uid,
+        },
+      });
+
+      this.logger.info('result', result);
+
+      return !!(result.find(i => i.platform === 'cny'));
+    } catch (e) {
+      this.logger.info('e', e.toString());
+      return false;
+    }
+
+  }
+
+  /**
+   * 获取用户所有的账号
+   * @param {*} param
+   */
   async userAccounts({ uid }) {
     this.logger.info('userAccounts', Date.now());
+
     const { ctx } = this;
     try {
       const sql = 'SELECT uid, account, platform, is_main FROM user_accounts WHERE uid = :uid;';
@@ -148,6 +187,14 @@ class UserService extends Service {
       };
     }
   }
+  /**
+   * 用户账号更新密码
+   * 1. 安全码校验
+   * 2. change账号校验
+   * 3. 密码为空校验
+   * 4. 密码重复校验
+   * @param {*} param
+   */
   async userAccountsUpdatePass({ uid, password, key }) {
     this.logger.info('userAccountsUpdatePass', Date.now());
     const { ctx } = this;
@@ -156,6 +203,10 @@ class UserService extends Service {
 
       if (key !== this.config.securityCode) {
         throw new Error('安全码错误');
+      }
+
+      if (await this.isExchangeAccount({ uid })) {
+        throw new Error('不允许对交易账号进行操作');
       }
 
       if (!password) {
@@ -246,7 +297,14 @@ class UserService extends Service {
       };
     }
   }
-
+  /**
+   * 用户账号绑定邮箱
+   * 1. 安全码校验
+   * 2. change账号校验
+   * 3. 是否绑定过了Email账号校验
+   * 4. 是否重复邮箱账号 用户名/呢称/邮箱 占用校验
+   * @param {*} param { uid email password key }
+   */
   async userAccountsBindEmail({ uid, email, password, key }) {
     this.logger.info('userAccountsBindEmail', Date.now(), uid, email, password);
 
@@ -258,6 +316,27 @@ class UserService extends Service {
       if (key !== this.config.securityCode) {
         throw new Error('安全码错误');
       }
+
+      if (await this.isExchangeAccount({ uid })) {
+        throw new Error('不允许对交易账号进行操作');
+      }
+
+      // 是否已经绑定过邮箱了
+      const sql = 'SELECT uid, account, platform FROM user_accounts WHERE uid = :uid;';
+      const [ resultUserAccountsList ] = await ctx.model.query(sql, {
+        raw: true,
+        replacements: {
+          uid,
+        },
+      });
+
+      this.logger.info('resultUserAccountsList', resultUserAccountsList);
+
+      const haveEmail = !!(resultUserAccountsList.find(i => i.platform === 'email'));
+      if (haveEmail) {
+        throw new Error('已经绑定过Email账号了');
+      }
+
 
       // 验证邮箱是否使用过
       const sqlUserAccounts = 'SELECT * FROM users WHERE email = :email OR username = :email OR nickname = :email;';
