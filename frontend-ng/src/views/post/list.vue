@@ -30,13 +30,13 @@
       <el-table-column label="文章标题" prop="title" align="center" fixed />
       <el-table-column label="作者" prop="author" align="center" />
       <el-table-column label="作者用户名" prop="username" align="center" />
-      <el-table-column label="摘要" prop="short_content" align="center" width="300">
+      <el-table-column label="摘要" prop="short_content" align="center">
         <template slot-scope="scope">
           {{ scope.row.short_content.slice(0, 25) + '...' }}
         </template>
       </el-table-column>
 
-      <el-table-column label="发布时间" prop="create_time" width="105" align="center">
+      <el-table-column label="发布时间" prop="create_time" align="center">
         <template slot-scope="scope">
           {{ new Date(scope.row.create_time).toLocaleString() }}
         </template>
@@ -52,10 +52,17 @@
         </template>
       </el-table-column>
       <!-- <el-table-column label="是否被推荐" prop="is_recommend" align="center" /> -->
-      <el-table-column label="评论需要支付的积分" prop="comment_pay_point" align="center" />
+      <el-table-column label="评论积分" prop="comment_pay_point" align="center">
+        <template slot="header">
+          评论积分
+          <el-tooltip class="item" effect="dark" content="评论需要支付的积分" placement="top">
+            <i class="el-icon-question" />
+          </el-tooltip>
+        </template>
+      </el-table-column>
       <!-- <el-table-column label="干预时间排序" prop="time_down" align="center" /> -->
 
-      <el-table-column label="降低时间排序" align="center" width="90" fixed="right">
+      <el-table-column label="降低时间排序" align="center" width="110" fixed="right">
         <template slot-scope="scope">
           <div style="margin: 12px 0;">
             <el-badge :value="scope.row.time_down" class="item" type="primary" :hidden="scope.row.time_down === 0">
@@ -67,7 +74,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="降低热门排序" align="center" width="90" fixed="right">
+      <el-table-column label="降低热门排序" align="center" width="110" fixed="right">
         <template slot-scope="scope">
           <div style="margin: 12px 0;">
             <el-badge :value="scope.row.down" class="item" type="primary" :hidden="scope.row.down === 0">
@@ -80,7 +87,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="隐藏文章" align="center" fixed="right">
+      <el-table-column label="隐藏文章" align="center" width="80" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="Boolean(scope.row.status)"
@@ -88,7 +95,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="推荐" align="center" fixed="right">
+      <el-table-column label="推荐" align="center" width="80" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="Boolean(scope.row.is_recommend)"
@@ -96,7 +103,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="100" fixed="right">
+      <el-table-column align="center" label="操作" width="60" fixed="right">
         <template slot-scope="scope">
           <router-link :to="`/p/detail/${scope.row.id}`" target="_blank">
             <el-button type="text" size="small">详情</el-button>
@@ -104,12 +111,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :total="count"
-      background
-      layout="prev, pager, next"
-      @current-change="handleCurrentChange"
-    />
+    <div class="pagination">
+      <el-pagination
+        :total="count"
+        background
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -268,4 +277,8 @@ export default {
 </script>
 
 <style scoped>
+.pagination {
+  text-align: center;
+  margin: 20px 0 0 0;
+}
 </style>

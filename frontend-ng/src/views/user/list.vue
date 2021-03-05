@@ -28,22 +28,22 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="id" prop="id" align="center" fixed />
+      <el-table-column label="id" prop="id" width="80" align="center" fixed />
       <el-table-column label="用户名" prop="username" align="center" fixed />
       <el-table-column label="邮箱" prop="email" align="center" fixed />
       <el-table-column label="昵称" prop="nickname" align="center" />
-      <el-table-column label="头像" width="110" align="center">
+      <el-table-column label="头像" width="60" align="center">
         <template slot-scope="scope">
-          <img v-if="scope.row.avatar" :src="getImg(scope.row.avatar)" alt="头像" width="100px">
+          <img v-if="scope.row.avatar" :src="getImg(scope.row.avatar)" alt="头像" width="100%">
         </template>
       </el-table-column>
       <el-table-column label="自我介绍" width="110" align="center" prop="introduction" />
-      <el-table-column label="来源平台" width="110" align="center" prop="platform" />
+      <el-table-column label="来源平台" width="80" align="center" prop="platform" />
       <el-table-column label="注册时间" width="110" align="center" prop="create_time" />
       <el-table-column label="最后登录时间" width="110" align="center" prop="last_login_time" />
       <el-table-column label="注册IP" width="110" align="center" prop="reg_ip" />
       <el-table-column label="最后登录IP" width="110" align="center" prop="last_login_ip" />
-      <el-table-column label="是否推荐" width="110" align="center" fixed="right">
+      <el-table-column label="是否推荐" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="Boolean(scope.row.is_recommend)"
@@ -51,7 +51,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="种子用户" width="110" align="center" fixed="right">
+      <el-table-column label="种子用户" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="(scope.row.status & userStatus.isSeed) === userStatus.isSeed"
@@ -59,7 +59,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="发币用户" width="110" align="center" fixed="right">
+      <el-table-column label="发币用户" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="(scope.row.status & userStatus.isMint) === userStatus.isMint"
@@ -67,7 +67,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="交易权限" width="110" align="center" fixed="right">
+      <el-table-column label="交易权限" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="(scope.row.status & userStatus.isExchange) === userStatus.isExchange"
@@ -75,7 +75,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="100" fixed="right">
+      <el-table-column align="center" label="操作" width="60" fixed="right">
         <template slot-scope="scope">
           <router-link :to="`/user/detail/${scope.row.id}`" target="_blank">
             <el-button type="text" size="small">详情</el-button>
@@ -83,12 +83,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :total="count"
-      background
-      layout="prev, pager, next"
-      @current-change="handleCurrentChange"
-    />
+    <div class="pagination">
+      <el-pagination
+        :total="count"
+        background
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -204,4 +206,8 @@ export default {
 </script>
 
 <style scoped>
+.pagination {
+  text-align: center;
+  margin: 20px 0 0 0;
+}
 </style>
