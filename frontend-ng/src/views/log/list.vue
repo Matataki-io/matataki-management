@@ -30,12 +30,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      :total="count"
-      background
-      layout="prev, pager, next"
-      @current-change="handleCurrentChange"
-    />
+    <div class="pagination">
+      <el-pagination
+        :total="count"
+        background
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -127,4 +129,8 @@ export default {
 </script>
 
 <style scoped>
+.pagination {
+  text-align: center;
+  margin: 20px 0 0 0;
+}
 </style>

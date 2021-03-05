@@ -117,4 +117,9 @@ code {
     border-radius: 4px;
     color: #F56C6C
 }
+.log {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+}
 </style>
