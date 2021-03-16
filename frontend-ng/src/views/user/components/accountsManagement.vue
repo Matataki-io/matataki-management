@@ -1,80 +1,89 @@
 <template>
   <div>
-    <el-switch
-      v-model="switchStatus"
-      active-text="显示"
-      inactive-text="隐藏"
-    />
-    <div v-if="switchStatus" style="margin: 20px 0 0 0;">
-      <el-table
-        :data="userAccounts"
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="account"
-          label="账号"
-        />
-        <el-table-column
-          prop="platform"
-          label="平台"
-          width="200"
-        />
-        <el-table-column
-          prop="platform"
-          label="操作"
-          width="120"
+    <div v-if="user.platform !== 'cny'">
+      <el-switch
+        v-model="switchStatus"
+        active-text="显示"
+        inactive-text="隐藏"
+      />
+      <div v-if="switchStatus" style="margin: 20px 0 0 0;">
+        <el-table
+          :data="userAccounts"
+          style="width: 100%"
         >
-          <template slot-scope="scope">
-            <el-button
-              v-if="scope.row.platform === 'email'"
-              size="mini"
-              type="danger"
-              @click="mode = 'modify'"
-            >修改密码</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button
-        v-if="!haveEmail"
-        type="primary"
-        size="mini"
-        style="margin: 20px 0;"
-        @click="mode = 'bind'"
-      >绑定邮箱</el-button>
-      <el-form v-if="mode === 'modify'" ref="ruleFormPassword" :model="ruleFormPassword" :rules="rulesPassword" label-width="100px" style="margin: 20px 0 0 0;">
-        <el-form-item label="原密码" prop="name">
-          <el-input value="**********" type="password" disabled="disabled" />
-        </el-form-item>
-        <el-form-item label="新密码" prop="password">
-          <el-input v-model="ruleFormPassword.password" show-password placeholder="请输入密码" autocomplete="new-password" />
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPassword">
-          <el-input v-model="ruleFormPassword.checkPassword" show-password placeholder="请输入密码" autocomplete="new-password" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleFormPassword')">立即修改</el-button>
-        </el-form-item>
-      </el-form>
-      <el-form v-if="mode === 'bind'" ref="ruleFormEmail" :model="ruleFormEmail" :rules="rulesEmail" label-width="100px" style="margin: 20px 0 0 0;">
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="ruleFormEmail.email" type="text" placeholder="请输入邮箱" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="新密码" prop="password">
-          <el-input v-model="ruleFormEmail.password" show-password placeholder="请输入密码" autocomplete="new-password" />
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPassword">
-          <el-input v-model="ruleFormEmail.checkPassword" show-password placeholder="请输入密码" autocomplete="new-password" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleFormEmail')">立即绑定</el-button>
-        </el-form-item>
-      </el-form>
+          <el-table-column
+            prop="account"
+            label="账号"
+          />
+          <el-table-column
+            prop="platform"
+            label="平台"
+            width="200"
+          />
+          <el-table-column
+            prop="platform"
+            label="操作"
+            width="120"
+          >
+            <template slot-scope="scope">
+              <el-button
+                v-if="scope.row.platform === 'email'"
+                size="mini"
+                type="danger"
+                @click="mode = 'modify'"
+              >修改密码</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-button
+          v-if="!haveEmail"
+          type="primary"
+          size="mini"
+          style="margin: 20px 0;"
+          @click="mode = 'bind'"
+        >绑定邮箱</el-button>
+        <el-form v-if="mode === 'modify'" ref="ruleFormPassword" :model="ruleFormPassword" :rules="rulesPassword" label-width="100px" style="margin: 20px 0 0 0;">
+          <el-form-item label="原密码" prop="name">
+            <el-input value="**********" type="password" disabled="disabled" />
+          </el-form-item>
+          <el-form-item label="新密码" prop="password">
+            <el-input v-model="ruleFormPassword.password" show-password placeholder="请输入密码" autocomplete="new-password" />
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPassword">
+            <el-input v-model="ruleFormPassword.checkPassword" show-password placeholder="请输入密码" autocomplete="new-password" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleFormPassword')">立即修改</el-button>
+          </el-form-item>
+        </el-form>
+        <el-form v-if="mode === 'bind'" ref="ruleFormEmail" :model="ruleFormEmail" :rules="rulesEmail" label-width="100px" style="margin: 20px 0 0 0;">
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="ruleFormEmail.email" type="text" placeholder="请输入邮箱" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="新密码" prop="password">
+            <el-input v-model="ruleFormEmail.password" show-password placeholder="请输入密码" autocomplete="new-password" />
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPassword">
+            <el-input v-model="ruleFormEmail.checkPassword" show-password placeholder="请输入密码" autocomplete="new-password" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleFormEmail')">立即绑定</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
+    <span v-else class="disabled">交易账号禁止操作</span>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    user: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data() {
     const validatePass = (rule, value, callback) => {
       if (value !== this.ruleFormPassword.password) {
@@ -233,3 +242,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.disabled {
+  font-size: 14px;
+  color: #b5b5b5;
+}
+</style>

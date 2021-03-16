@@ -77,7 +77,7 @@
       <div slot="header">
         <span>账号管理</span>
       </div>
-      <accountsManagement />
+      <accountsManagement :user="u" />
     </el-card>
     <el-card style="margin-top: 20px;">
       <div slot="header">

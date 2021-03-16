@@ -187,12 +187,13 @@ class MineTokenService extends Service {
 
       // 插入队列
       const time = moment().utc().format('YYYY-MM-DD HH:mm:ss');
-      const sqlPushQueue = 'INSERT INTO minetokens_application_queue(application_id, uid, create_time, update_time) VALUES(:application_id, :uid, :create_time, :update_time);';
+      const sqlPushQueue = 'INSERT INTO minetokens_application_queue(application_id, uid, status, create_time, update_time) VALUES(:application_id, :uid, :status, :create_time, :update_time);';
       const [ resultApplicationQueue ] = await ctx.model.query(sqlPushQueue, {
         raw: true,
         replacements: {
           application_id: resultApplication[0].id,
           uid,
+          status: 0,
           create_time: time,
           update_time: time,
         },
@@ -214,8 +215,8 @@ class MineTokenService extends Service {
   async agreeCreate() {
     const { ctx } = this;
     try {
-      // 取最早的一条数据
-      const sqlQueue = 'SELECT * FROM minetokens_application_queue WHERE token_id IS NULL ORDER BY create_time ASC LIMIT 0, 1;';
+      // 取最早的一条数据 status = 0 and tokenid is null
+      const sqlQueue = 'SELECT * FROM minetokens_application_queue WHERE token_id IS NULL AND status = 0 ORDER BY create_time ASC LIMIT 0, 1;';
       const [ resultQueue ] = await ctx.model.query(sqlQueue);
       this.logger.info('resultQueue', resultQueue);
 
@@ -231,26 +232,43 @@ class MineTokenService extends Service {
       const uid = resultQueue[0].uid;
       const type = 'agree';
       const reason = '';
+      // console.log('uid', uid, type, reason);
       const resultAgree = await this.modify(uid, type, reason);
-      // const resultAgree = { code: 0, data: { token_id: 1 } };
+      // const resultAgree = { code: -1, data: { token_id: 1 } };
+
+      let sqlUpdateQueue = '';
+      let replacements = {};
+      const time = moment().utc().format('YYYY-MM-DD HH:mm:ss');
 
       if (resultAgree.code === 0) {
-        //
-      } else {
-        throw new Error('创建失败');
-      }
-
-      // 更新数据
-      const time = moment().utc().format('YYYY-MM-DD HH:mm:ss');
-      const sqlUpdateQueue = 'UPDATE minetokens_application_queue SET token_id = :token_id, update_time = :update_time WHERE application_id = :application_id AND uid = :uid;';
-      const [ resultUpdateQueue ] = await ctx.model.query(sqlUpdateQueue, {
-        raw: true,
-        replacements: {
+        // 更新 token_id status
+        sqlUpdateQueue = 'UPDATE minetokens_application_queue SET token_id = :token_id, status = :status, update_time = :update_time WHERE application_id = :application_id AND uid = :uid;';
+        replacements = {
           token_id: resultAgree.data.token_id,
+          status: 1,
           application_id: resultQueue[0].application_id,
           uid: resultQueue[0].uid,
           update_time: time,
-        },
+        };
+      } else {
+        // 更新 status
+        sqlUpdateQueue = 'UPDATE minetokens_application_queue SET status = :status, update_time = :update_time WHERE application_id = :application_id AND uid = :uid;';
+        replacements = {
+          status: 1,
+          application_id: resultQueue[0].application_id,
+          uid: resultQueue[0].uid,
+          update_time: time,
+        };
+
+        const text = `创建Fan票异常提醒：创建失败 - uid:${uid}，请相关开发者尽快处理！`;
+        await this.service.robot.pushToDingTalk({ text });
+        this.logger.info(text);
+      }
+
+      // 更新数据
+      const [ resultUpdateQueue ] = await ctx.model.query(sqlUpdateQueue, {
+        raw: true,
+        replacements,
       });
 
       this.logger.info('resultUpdateQueue', resultUpdateQueue);
