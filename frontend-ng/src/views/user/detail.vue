@@ -57,6 +57,9 @@
           <el-form-item label="交易权限：">
             <el-switch v-model="isExchange" @change="handleChange($event, 'isExchange')" />
           </el-form-item>
+          <el-form-item label="免验证码权限：">
+            <el-switch v-model="noCaptcha" @change="handleChange($event, 'noCaptcha')" />
+          </el-form-item>
         </el-form>
         <!-- <p>id: {{ u.id }}</p>
         <p>用户名: {{ u.username }}</p>
@@ -106,6 +109,7 @@ export default {
       isSeed: false,
       isMint: false,
       isExchange: false,
+      noCaptcha: false,
       isRecommend: false
     }
   },
@@ -155,6 +159,7 @@ export default {
         this.isExchange =
           (status & userStatus.isExchange) === userStatus.isExchange
         this.isRecommend = res.data.is_recommend
+        this.noCaptcha = res.data.no_captcha
         this.updateTitle(res.data)
       })
     }
