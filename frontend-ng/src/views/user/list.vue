@@ -16,6 +16,9 @@
       <el-form-item label="有权限发币">
         <el-switch v-model="search.isMint" @change="getList(1)" />
       </el-form-item>
+      <el-form-item label="有权限免验证码">
+        <el-switch v-model="search.no_captcha" @change="getList(1)" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="searchList">查询</el-button>
       </el-form-item>
@@ -51,6 +54,15 @@
           />
         </template>
       </el-table-column>
+      <el-table-column label="是否免验证码" width="80" align="center" fixed="right">
+        <template slot-scope="scope">
+          <el-switch
+            :value="Boolean(scope.row.no_captcha)"
+            @change="handleChange(scope.$index, $event, 'noCaptcha')"
+          />
+        </template>
+      </el-table-column>
+      
       <el-table-column label="种子用户" width="80" align="center" fixed="right">
         <template slot-scope="scope">
           <el-switch
@@ -120,6 +132,7 @@ export default {
         username: '',
         nickname: '',
         is_recommend: false,
+        no_captcha: false,
         isMint: false
       },
       userStatus: userStatus

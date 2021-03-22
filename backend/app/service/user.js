@@ -32,6 +32,8 @@ class UserService extends Service {
         } else if (propName === 'isMint') {
           delete searchParams[propName];
           searchParams.status = this.app.Sequelize.where(this.app.Sequelize.literal('status & 2'), 2);
+        } else if (propName === 'no_captcha') {
+          searchParams[propName] = Number(JSON.parse(searchParams[propName]));
         }
       }
 
