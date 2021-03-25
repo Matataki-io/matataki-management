@@ -51,7 +51,9 @@
 
       <el-table-column label="发布时间" prop="create_time" width="90" align="center">
         <template slot-scope="scope">
-          {{ formatToRelativeTime(scope.row.create_time) }}
+          <span :title="new Date(scope.row.create_time).toLocaleString()">
+            {{ formatToRelativeTime(scope.row.create_time) }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column label="原创" prop="is_original" width="50" align="center">
