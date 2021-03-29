@@ -55,11 +55,13 @@ class RobotService extends Service {
           //
         }
       }
-
-      if (count > 0) {
-        const title = `【发币审核】提醒：目前有${resultQueue.length}条未处理`;
+      this.logger.info('count', count);
+      if (resultQueue.length > 0) {
+        const title = `【发币审核】提醒：目前有${resultQueue.length}条未处理 (测试网)`;
         const { management, portal } = this.config.website;
-        const text = resultQueue.map(application => `- ${application.name} (${application.symbol}) [申请人主页](${portal}/user/${application.uid})`).join('\n');
+        const rows = resultQueue.map(application => `- ${application.name} (${application.symbol}) [申请人主页](${portal}/user/${application.uid})`);
+        let text = [ ...rows, `- 点击 👉  [进入管理后台](${management}/#/minetoken/list) 或者复制链接`, `${management}/#/minetoken/list` ].join('\n');
+        // text += `\n [进入管理后台](${management}/#/minetoken/list) \n`;
         const btns = [
           {
             title: '进入管理后台 ↗️',
@@ -91,10 +93,11 @@ ${text}`,
           btns,
         },
       };
-      await axios.post(this.config.DingTalkRobot.url, data, {
+      const res = await axios.post(this.config.DingTalkRobot.url, data, {
         headers: { 'Content-Type': 'application/json' },
         params: { access_token },
       });
+      this.logger.info('res', res);
     } catch (e) {
       this.logger.error(e);
     }
