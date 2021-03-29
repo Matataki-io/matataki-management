@@ -57,12 +57,46 @@ class RobotService extends Service {
       }
 
       if (count > 0) {
-        const text = `申请Fan票提醒：目前有${resultQueue.length}条未处理`;
-        await this.pushToDingTalk({ text });
-        this.logger.info(text);
+        const title = `【发币审核】提醒：目前有${resultQueue.length}条未处理`;
+        const { management, portal } = this.config.website;
+        const text = resultQueue.map(application => `- ${application.name} (${application.symbol}) [申请人主页](${portal}/user/${application.uid})`).join('\n');
+        const btns = [
+          {
+            title: '进入管理后台 ↗️',
+            actionURL: `${management}/#/minetoken/list`,
+          },
+        ];
+        await this.pushActionCardToDingTalk({ title, text, btns });
+        // this.logger.info(text);
       }
     } catch (e) {
       this.logger.error('error', e);
+    }
+  }
+
+  async pushActionCardToDingTalk({ title, text = '', btns = [] }) {
+    try {
+      const access_token = this.config.DingTalkRobot.managementPlatform;
+      if (!access_token) {
+        this.logger.error("You don't have such a dingtalk bot in config.");
+      }
+      const data = {
+        msgtype: 'actionCard',
+        actionCard: {
+          title,
+          text: `# ${title}
+${text}`,
+          hideAvatar: '0',
+          btnOrientation: '0',
+          btns,
+        },
+      };
+      await axios.post(this.config.DingTalkRobot.url, data, {
+        headers: { 'Content-Type': 'application/json' },
+        params: { access_token },
+      });
+    } catch (e) {
+      this.logger.error(e);
     }
   }
 }
