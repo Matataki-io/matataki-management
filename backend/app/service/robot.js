@@ -55,8 +55,7 @@ class RobotService extends Service {
           //
         }
       }
-      this.logger.info('count', count);
-      if (resultQueue.length > 0) {
+      if (count > 0) {
         const title = `【发币审核】提醒：目前有${resultQueue.length}条未处理 (测试网)`;
         const { management, portal } = this.config.website;
         const rows = resultQueue.map(application => `- ${application.name} (${application.symbol}) [申请人主页](${portal}/user/${application.uid})`);
