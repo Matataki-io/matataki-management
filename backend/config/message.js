@@ -10,5 +10,7 @@ module.exports = () => {
     botSendMsgFailed: { code: -1, message: '机器人发送消息失败' },
     updateFailed: { code: -2, message: '更新失败' },
     ipfsCatchFailed: { code: -3, message: 'IPFS获取失败' },
+    paramsError: { code: -4, message: '参数错误' },
+    innerError: { code: -5, message: '内部错误' },
   };
 };

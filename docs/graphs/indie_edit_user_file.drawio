@@ -1,0 +1,28 @@
+<mxfile>
+    <diagram id="99zECeEw18jtH8phpOEg" name="第 1 页">
+        <mxGraphModel dx="1194" dy="903" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="80" width="440" height="560" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC5&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-c&quot;&gt;&lt;span class=&quot;pl-c&quot;&gt;#&lt;/span&gt; Site&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC6&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;title&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;site_name_to_be_replaced&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC7&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;subtitle&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC8&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;description&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC9&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;keywords&lt;/span&gt;:&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC10&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;author&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;John Doe&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;br&gt;&lt;table class=&quot;highlight tab-size js-file-line-container&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td id=&quot;LC11&quot; class=&quot;blob-code blob-code-inner js-file-line&quot;&gt;&lt;span class=&quot;pl-ent&quot;&gt;language&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;en&lt;/span&gt;&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;span class=&quot;pl-ent&quot;&gt;timezone&lt;/span&gt;: &lt;span class=&quot;pl-s&quot;&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;pl-pds&quot;&gt;'&lt;/span&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="140" width="370" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="您正在编辑id1045用户的/_config.yml文件" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="205" y="100" width="260" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="×" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="80" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="提交之前请务必仔细确认用户id和编辑项目！警示❗" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="540" width="170" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="确认" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;fillWeight=4;hachureGap=8;hachureAngle=45;fillColor=#1ba1e2;sketch=1;" vertex="1" parent="1">
+                    <mxGeometry x="370" y="540" width="120" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -58,4 +58,9 @@ module.exports = app => {
 
 
   router.post('/api/test', passport, controller.test.test);
+
+  // 读取子站用户列表19011
+  router.get('/api/indie/users', passport, controller.indie.index2);
+  // 写入用户的子站设置（我方设置）19021
+  router.post('/api/indie/setting', passport, controller.indie.setIndie);
 };
