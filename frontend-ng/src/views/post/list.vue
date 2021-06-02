@@ -25,20 +25,9 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="id" prop="id" align="center" fixed />
-      <el-table-column label="文章hash" prop="hash" align="center" fixed />
-      <el-table-column label="文章标题" prop="title" align="center" fixed />
-      <el-table-column label="作者" prop="author" align="center" />
-      <el-table-column label="作者用户名" prop="username" align="center" />
-      <el-table-column label="摘要" prop="short_content" align="center">
+      <el-table-column label="文章ID" prop="id" align="center" width="70" fixed>
         <template slot-scope="scope">
-          {{ scope.row.short_content.slice(0, 25) + '...' }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="发布时间" prop="create_time" align="center">
-        <template slot-scope="scope">
-          {{ new Date(scope.row.create_time).toLocaleString() }}
+          <el-link :href="getMatatakiArticleUrl(scope.row.id)" target="_blank" type="primary">{{ scope.row.id }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="封面" align="center">
@@ -46,13 +35,34 @@
           <img v-if="scope.row.cover" :src="getImg(scope.row.cover)" alt="封面" width="100px">
         </template>
       </el-table-column>
-      <el-table-column label="是否原创" prop="is_original" align="center">
+      <!-- <el-table-column label="文章hash" prop="hash" align="center" fixed /> -->
+      <el-table-column label="文章标题" prop="title" align="center" />
+      <!-- <el-table-column label="作者" prop="author" align="center" /> -->
+      <el-table-column label="作者" prop="username" align="center">
         <template slot-scope="scope">
-          {{ scope.row.is_original ? "是" : "否" }}
+          <router-link :to="{ name: 'UserDetail', params: { id: scope.row.uid }}">{{ scope.row.username }} ↗️</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column label="摘要" prop="short_content" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.short_content.slice(0, 25) + '...' }}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="发布时间" prop="create_time" width="90" align="center">
+        <template slot-scope="scope">
+          <span :title="new Date(scope.row.create_time).toLocaleString()">
+            {{ formatToRelativeTime(scope.row.create_time) }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="原创" prop="is_original" width="50" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.is_original ? "☑️" : "✖️" }}
         </template>
       </el-table-column>
       <!-- <el-table-column label="是否被推荐" prop="is_recommend" align="center" /> -->
-      <el-table-column label="评论积分" prop="comment_pay_point" align="center">
+      <el-table-column label="评论积分" prop="comment_pay_point" width="100" align="center">
         <template slot="header">
           评论积分
           <el-tooltip class="item" effect="dark" content="评论需要支付的积分" placement="top">
@@ -87,7 +97,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="隐藏文章" align="center" width="80" fixed="right">
+      <el-table-column label="隐藏" align="center" width="62" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="Boolean(scope.row.status)"
@@ -95,7 +105,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="推荐" align="center" width="80" fixed="right">
+      <el-table-column label="推荐" align="center" width="63" fixed="right">
         <template slot-scope="scope">
           <el-switch
             :value="Boolean(scope.row.is_recommend)"
@@ -106,8 +116,9 @@
       <el-table-column align="center" label="操作" width="60" fixed="right">
         <template slot-scope="scope">
           <router-link :to="`/p/detail/${scope.row.id}`" target="_blank">
-            <el-button type="text" size="small">详情</el-button>
+            <el-button type="text" size="small">更多设定</el-button>
           </router-link>
+          <el-link :href="getMatatakiArticleUrl(scope.row.id)" target="_blank" type="primary">查看</el-link>
         </template>
       </el-table-column>
     </el-table>
@@ -124,6 +135,9 @@
 
 <script>
 import { isNull } from '@/utils/validate'
+import Dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/zh-cn'
 export default {
   filters: {
     statusFilter(status) {
@@ -158,6 +172,15 @@ export default {
       }
     }
   },
+  computed: {
+    getMatatakiHostByEnv() {
+      switch (process.env.NODE_ENV) {
+        case 'development': return 'https://test.matataki.io'
+        case 'production': return 'https://www.matataki.io'
+        default: return 'http://local-dev.matataki.io:8080'
+      }
+    }
+  },
   created() {
     this.getList(1)
   },
@@ -180,7 +203,14 @@ export default {
       )
       if (result) this.list[index].is_recommend = Number(e)
     },
-
+    formatToRelativeTime(dates) {
+      Dayjs.extend(relativeTime)
+      return Dayjs().locale('zh-cn').to(Dayjs(dates))
+    },
+    getMatatakiArticleUrl(id) {
+      const host = this.getMatatakiHostByEnv
+      return `${host}/p/${id}`
+    },
     async handleTimeOrder(e, index) {
       const time_down = Number(e) ? 10 : 0
       const result = await this.updatePost(
