@@ -12,5 +12,10 @@ module.exports = () => {
     ipfsCatchFailed: { code: -3, message: 'IPFS获取失败' },
     paramsError: { code: -4, message: '参数错误' },
     innerError: { code: -5, message: '内部错误' },
+    dataError: { code: -6, message: '数据错误' },
+    dataCriticalError: { code: -7, message: '数据重要错误' },
+    userNotExist: { code: -8, message: '用户不存在' },
+    requestError: { code: -9, message: '请求错误' },
+    networkError: { code: -10, message: '网络错误' },
   };
 };
