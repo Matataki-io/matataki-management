@@ -81,6 +81,21 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/indie',
+    component: Layout,
+    redirect: '/indie/list',
+    name: 'Indie',
+    meta: { title: '子站管理', icon: 'list' },
+    children: [
+      {
+        path: 'list',
+        name: 'IndieList',
+        component: () => import('@/views/indie/list'),
+        meta: { title: '子站管理', icon: 'list' }
+      }
+    ]
+  },
+  {
     path: '/boardcast',
     component: Layout,
     redirect: '/boardcast/telegram',
