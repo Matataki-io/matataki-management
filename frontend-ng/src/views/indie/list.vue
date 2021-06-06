@@ -39,7 +39,14 @@
         </template>
       </el-table-column>
       <el-table-column label="编辑仓库文件" width="110" align="center">
-        <el-button type="success" size="small" plain @click="editGithubFile">编辑文件</el-button>
+        <template slot-scope="scope">
+          <el-button
+            type="success"
+            size="small"
+            plain
+            @click="editGithubFile(scope.row.uid_g)"
+          >编辑文件</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <div class="pagination">
@@ -50,13 +57,17 @@
         @current-change="handleCurrentChange"
       />
     </div>
-
     <EditStoreDialog
       :uid="editing.uid"
       :article-repo="editing.articleRepo"
       :is-editing="isEditingStore"
       @close="isEditingStore = false"
       @update="handleCurrentChange(pageIndex)"
+    />
+    <EditFileDialog
+      :uid="editing.uid"
+      :is-editing="isEditingFile"
+      @close="isEditingFile = false"
     />
   </div>
 </template>
@@ -67,8 +78,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-cn'
 import { isNull } from '@/utils/validate'
 import EditStoreDialog from './components/EditStoreDialog'
+import EditFileDialog from './components/EditFileDialog'
 export default {
-  components: { EditStoreDialog },
+  components: { EditStoreDialog, EditFileDialog },
   data() {
     return {
       list: null,
@@ -78,6 +90,7 @@ export default {
       pageIndex: 1,
       search: { uid: null },
       isEditingStore: false,
+      isEditingFile: false,
       editing: {
         uid: null,
         articleRepo: ''
@@ -97,7 +110,9 @@ export default {
       this.editing.articleRepo = articleRepo
       this.isEditingStore = true
     },
-    editGithubFile() {
+    editGithubFile(uid) {
+      this.editing.uid = uid
+      this.isEditingFile = true
     },
     handleCurrentChange(v) {
       this.getList(v)
