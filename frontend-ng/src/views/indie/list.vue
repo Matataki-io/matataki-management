@@ -28,13 +28,14 @@
         </template>
       </el-table-column>
       <el-table-column label="GitHub帐号" width="180" prop="account" align="center" />
+      <el-table-column label="子站状态" width="100" prop="site_status" align="center" />
       <el-table-column label="编辑配置" width="140" align="center">
         <template slot-scope="scope">
           <el-button
             type="primary"
             size="small"
             plain
-            @click="editConfigStore(scope.row.uid_g, scope.row.article_repo)"
+            @click="editConfigStore(scope.row.uid_g, scope.row.article_repo, scope.row.site_status)"
           >编辑我方配置</el-button>
         </template>
       </el-table-column>
@@ -60,6 +61,7 @@
     <EditStoreDialog
       :uid="editing.uid"
       :article-repo="editing.articleRepo"
+      :site-status="editing.siteStatus"
       :is-editing="isEditingStore"
       @close="isEditingStore = false"
       @update="handleCurrentChange(pageIndex)"
@@ -93,7 +95,8 @@ export default {
       isEditingFile: false,
       editing: {
         uid: null,
-        articleRepo: ''
+        articleRepo: '',
+        siteStatus: false
       }
     }
   },
@@ -105,9 +108,10 @@ export default {
       Dayjs.extend(relativeTime)
       return Dayjs().locale('zh-cn').to(Dayjs(dates))
     },
-    editConfigStore(uid, articleRepo) {
+    editConfigStore(uid, articleRepo, siteStatus) {
       this.editing.uid = uid
       this.editing.articleRepo = articleRepo
+      this.editing.siteStatus = siteStatus
       this.isEditingStore = true
     },
     editGithubFile(uid) {

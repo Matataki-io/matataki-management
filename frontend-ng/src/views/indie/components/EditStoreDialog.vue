@@ -6,6 +6,7 @@
       :before-close="handleClose"
       width="510px"
       center
+      @open="handleOpen"
     >
       <el-form ref="form" style="padding-top: 15px" :model="form" label-position="left" label-width="120px">
         <el-form-item label="仓库名称">
@@ -46,6 +47,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    siteStatus: {
+      type: Number,
+      default: () => null
+    },
     uid: {
       type: Number,
       default: () => null
@@ -64,15 +69,9 @@ export default {
       }
     }
   },
-  watch: {
-    articleRepo() {
-      this.form.repo = this.articleRepo
-    }
-  },
   methods: {
     submit() {
       this.form.uid = this.uid
-
       this.request({
         url: this.apis.indieSettings,
         method: 'post',
@@ -91,13 +90,14 @@ export default {
           type: 'error'
         })
       })
-
       this.handleClose()
     },
     handleClose() {
-      /* clear the last used content */
-      this.status = null
       this.$emit('close')
+    },
+    handleOpen() {
+      this.form.siteStatus = this.siteStatus
+      this.form.repo = this.articleRepo
     }
   }
 }
