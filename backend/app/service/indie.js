@@ -53,8 +53,8 @@ class IndieService extends Service {
     // ?
     let sqlCode = '';
     if (uid) {
-      sqlCode = `SELECT COUNT(1) AS count FROM github;
-      SELECT github.id AS id_g, github.uid AS uid_g, github.article_repo,
+      sqlCode = `SELECT COUNT(1) AS count FROM github WHERE github.uid = :uid;
+      SELECT github.id AS id_g, github.uid AS uid_g, github.article_repo, github.site_status,
       users.username, users.platform AS platform_u, users.nickname, users.last_login_time,
       user_accounts.account, user_accounts.platform AS platform_ua
       FROM github
@@ -65,7 +65,7 @@ class IndieService extends Service {
       LIMIT :start, :end;`
     } else {
       sqlCode = `SELECT COUNT(1) AS count FROM github;
-      SELECT github.id AS id_g, github.uid AS uid_g, github.article_repo,
+      SELECT github.id AS id_g, github.uid AS uid_g, github.article_repo, github.site_status,
       users.username, users.platform AS platform_u, users.nickname, users.last_login_time,
       user_accounts.account, user_accounts.platform AS platform_ua
       FROM github
