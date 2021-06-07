@@ -143,7 +143,11 @@ export default {
     },
     handleClose() {
       /* clear the last used content */
-      this.status = null
+      this.isCreate = false
+      this.filename = ''
+      this.editingFile = ''
+      this.editingFileHash = ''
+      this.content = ''
       this.$emit('close')
     }
   }
