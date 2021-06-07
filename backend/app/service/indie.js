@@ -228,6 +228,12 @@ class IndieService extends Service {
        },
      })
     } catch (err) {
+      if ((err.response.status === 404) && (err.response.statusText === 'Not Found')) {
+        return {
+          code: 5,
+          data: null
+        };
+      }
       this.logger.error('IndieService:: readRepoFile error', err);
       return {
         code: 4,
@@ -310,6 +316,12 @@ class IndieService extends Service {
         data: request_data
       });
     } catch (err) {
+      if ((err.response.status === 404) && (err.response.statusText === 'Not Found')) {
+        return {
+          code: 4,
+          data: null
+        };
+      }
       this.logger.error('IndieService:: writeRepoFile github upload error', err);
       return {
         code: 3,

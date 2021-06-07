@@ -17,5 +17,6 @@ module.exports = () => {
     userNotExist: { code: -8, message: '用户不存在' },
     requestError: { code: -9, message: '请求错误' },
     networkError: { code: -10, message: '网络错误' },
+    remoteFileNotExistError: { code: -11, message: '所请求的远端文件不存在' },
   };
 };
