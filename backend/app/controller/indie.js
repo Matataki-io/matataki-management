@@ -91,6 +91,9 @@ class IndieController extends Controller {
       case 4:
         ctx.body = ctx.msg.innerError;
         return;
+      case 5:
+        ctx.body = ctx.msg.remoteFileNotExistError;
+        return;
       default:
         ctx.body = ctx.msg.failure;
     }
@@ -136,6 +139,9 @@ class IndieController extends Controller {
         return;
       case 3:
         ctx.body = ctx.msg.networkError;
+        return;
+      case 4:
+        ctx.body = ctx.msg.remoteFileNotExistError;
         return;
       default:
         ctx.body = ctx.msg.failure;
