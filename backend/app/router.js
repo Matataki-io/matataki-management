@@ -58,4 +58,13 @@ module.exports = app => {
 
 
   router.post('/api/test', passport, controller.test.test);
+
+  // 读取子站用户列表19011
+  router.get('/api/indie/users', passport, controller.indie.index2);
+  // 读取子站repo的某个文件19012
+  router.get('/api/indie/file', passport, controller.indie.readRepoFile);
+  // 写入用户的子站设置（我方设置）19021
+  router.post('/api/indie/setting', passport, controller.indie.setIndie);
+  // 写入/创建子站repo的某个文件19022
+  router.post('/api/indie/file', passport, controller.indie.writeRepoFile);
 };
