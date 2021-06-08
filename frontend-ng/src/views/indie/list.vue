@@ -18,7 +18,18 @@
     >
       <el-table-column label="序号ID" width="80" prop="id_g" align="center" fixed />
       <el-table-column label="用户ID" width="130" prop="uid_g" align="center" fixed />
-      <el-table-column label="子站仓库" width="160" prop="article_repo" align="center" />
+      <el-table-column label="子站仓库" width="160" prop="article_repo" align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.site_status === 1">
+            <el-link
+              :href="`https://${scope.row.account}.github.io/${scope.row.article_repo}`"
+              target="_blank"
+              type="primary"
+            >{{ scope.row.article_repo }}</el-link>
+          </span>
+          <span v-else>暂无子站</span>
+        </template>
+      </el-table-column>
       <el-table-column label="用户名" prop="username" align="center" />
       <el-table-column label="主帐号平台" width="120" prop="platform_u" align="center" />
       <el-table-column label="用户昵称" width="200" prop="nickname" align="center" />
@@ -96,7 +107,7 @@ export default {
       editing: {
         uid: null,
         articleRepo: '',
-        siteStatus: false
+        siteStatus: 0
       }
     }
   },
