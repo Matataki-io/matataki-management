@@ -21,6 +21,7 @@ module.exports = options => {
             ctx.user = await ctx.service.admin.get(jwtUser.username);
         } catch (err) {
             // jwt expired
+            console.error('jwt.verify: error: ', err);
             ctx.throw(401, 'The token is error.');
         }
         await next();
