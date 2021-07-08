@@ -234,6 +234,7 @@ class MineTokenService extends Service {
       const reason = '';
       // console.log('uid', uid, type, reason);
       const resultAgree = await this.modify(uid, type, reason);
+      this.logger.info('agreeCreate::resultAgree', resultAgree);
       // const resultAgree = { code: -1, data: { token_id: 1 } };
 
       let sqlUpdateQueue = '';
