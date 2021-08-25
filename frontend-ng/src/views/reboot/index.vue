@@ -63,5 +63,6 @@ export default {
 .cmd-output {
     background: black;
     color: gray;
+    white-space: pre-wrap;
 }
 </style>
