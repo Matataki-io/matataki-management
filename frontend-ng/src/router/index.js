@@ -227,6 +227,7 @@ export const constantRouterMap = [
   {
     path: '/reboot',
     name: 'Reboot',
+    meta: { title: '重启服务', icon: 'user' },
     component: () => import('@/views/reboot')
   },
   { path: '*', redirect: '/404', hidden: true }

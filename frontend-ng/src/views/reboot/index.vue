@@ -36,7 +36,7 @@ export default {
     async trigger(scriptName) {
       try {
         this.isSendingCmd = true
-        const result = await axios.get('/_switch_status_api/', {
+        const { data: result } = await axios.get('/_switch_status_api/', {
           params: {
             scriptName
           }
