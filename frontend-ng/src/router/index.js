@@ -224,6 +224,11 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/reboot',
+    name: 'Reboot',
+    component: () => import('@/views/reboot')
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
