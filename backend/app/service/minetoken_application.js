@@ -122,6 +122,7 @@ class MineTokenService extends Service {
             tags: tag.split(','),
             initialSupply: 1000 * (10 ** 4),
           };
+	  this.logger.info('data' + data);
           // 发布token
           const minetokenCreateResult = await axios.post(`${this.config.matatakiServer}/_minetoken/_create`, data);
           if (minetokenCreateResult.status === 200 && minetokenCreateResult.data.code === 0) {
