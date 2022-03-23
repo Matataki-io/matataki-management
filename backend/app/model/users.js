@@ -66,6 +66,11 @@ module.exports = app => {
 			allowNull: true,
 			defaultValue: '0'
 		},
+		no_captcha: {
+			type: DataTypes.INTEGER(1),
+			allowNull: false,
+			defaultValue: '0'
+		},
 		referral_uid: {
 			type: DataTypes.INTEGER(10).UNSIGNED,
 			allowNull: false,

@@ -40,11 +40,12 @@ class UserController extends Controller {
       for: 'update',
       id: parseInt(id),
     };
-    const { isSeed = null, isMint = null, isExchange = null, isRecommend = null } = ctx.request.body;
+    const { isSeed = null, isMint = null, isExchange = null, isRecommend = null, noCaptcha = null } = ctx.request.body;
     let isSeedResult = null;
     let isMintResult = null;
     let isExchangeResult = null;
     let isRecommendResult = null;
+    let noCaptchaResult = null;
     if (isSeed !== null) {
       isSeedResult = await ctx.service.user.setSeedPermission(id, isSeed);
       log.seedUpdate = true;
@@ -64,6 +65,10 @@ class UserController extends Controller {
       if (isRecommendResult[0] && isRecommend) { ctx.service.announcement.targetedPost(ctx.user.username, [ parseInt(id) ], '你已被瞬Matataki评为推荐作者', ''); }
     }
 
+    if (noCaptcha !== null) {
+      noCaptchaResult = await ctx.service.user.update(id, { no_captcha: noCaptcha ? 1 : 0 });
+    }
+
     await this.service.logging.addLog('user', ctx.user.id, log);
     ctx.body = {
       ...ctx.msg.success,
@@ -72,6 +77,7 @@ class UserController extends Controller {
         isMintResult,
         isExchangeResult,
         isRecommendResult,
+        noCaptchaResult,
       },
     };
   }
