@@ -1,63 +1,32 @@
-## 部署文档
 
-前端配置文件目录 
-frontend/config/dev.env.js
-frontend/config/prod.env.js
-
-后端配置文件目录
-backend/config/config.local.js
-backend/config/config.prod.js
-
-### 前端部署
+## FE
+### Development
 ```bash
-# 克隆项目
-git clone https://git.coding.net/zg919506719/candybox_manage.git
+cd frontend-ng
 
-# cd到前端目录
-cd ./frontend
+yarn
 
-# 安装依赖
-npm install
-
-# 修改config 在config/prod.env.js 文件的host
-
-# 打包
-## 生产环境
-npm run build-prod
-## 测试环境
-npm run build-dev
-
-# 生成dist文件夹，直接部署到服务器上
-
+yarn dev
 ```
 
-### 后端部署
-
+### Deploy
 ```bash
-# 服务器先安装nodejs 环境
-# 克隆项目
-git clone https://git.coding.net/zg919506719/candybox_manage.git
+yarn build-prod
+```
 
-# cd到后端目录
-cd ./backend
+## BE
 
-# 安装依赖
+### Development
+```bash
+cd backend
+
 npm install
 
-# 修改config/config.prod.js 数据库配置
-config.sequelize = {
-    dialect: 'mysql',
-    hostname: '127.0.0.1',
-    host: '127.0.0.1',
-    port: 3306,
-    database: 'candybox',
-    username: 'root',
-    password: 'candyboxtest',
-    dialectOptions: {
-        multipleStatements: true,
-    },
-};
+npm dev
+```
 
+### Deploy
+```bash
 # 启动服务
 npm start
 
