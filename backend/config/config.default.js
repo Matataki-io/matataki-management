@@ -1,5 +1,3 @@
-/* eslint valid-jsdoc: "off" */
-
 'use strict';
 
 /**
@@ -36,7 +34,7 @@ module.exports = appInfo => {
   };
 
   config.proxy = true;
-  
+
   // add your middleware config here
   config.middleware = [ 'formatMessage' ];
 
